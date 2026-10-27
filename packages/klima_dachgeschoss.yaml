@@ -1,0 +1,1073 @@
+# Home Assistant package: Dachgeschoss-Klimaregelung
+# Vor Verwendung alle Werte mit "replace_me" durch echte Entity-IDs ersetzen.
+# Wochen-Zeitplaene aus 01-entitaeten-und-helfer.md muessen vor dem Laden angelegt sein.
+
+#group:
+#  haushalt:
+#    name: Klima Haushalt
+#    entities:
+#      - person.replace_me_person_1
+#      # - person.replace_me_person_2
+#  klima_fenster_wohnen_offen:
+#    name: Klima Fenster Wohnen offen
+#    all: false
+#    entities:
+#      - binary_sensor.replace_me_fenster_wohnen_1
+#      - binary_sensor.replace_me_fenster_wohnen_2
+#      - binary_sensor.replace_me_fenster_wohnen_3
+#      - binary_sensor.replace_me_fenster_wohnen_4
+#  klima_fenster_schlafen_offen:
+#    name: Klima Fenster Schlafen offen
+#    all: false
+#    entities:
+#      - binary_sensor.replace_me_fenster_schlafen_1
+#      - binary_sensor.replace_me_fenster_schlafen_2
+#  klima_regen:
+#    name: Klima Regen an Dachfenstern
+#    all: false
+#    entities:
+#      - binary_sensor.replace_me_regen_wohnen_1
+#      - binary_sensor.replace_me_regen_wohnen_2
+#      - binary_sensor.replace_me_regen_wohnen_3
+#      - binary_sensor.replace_me_regen_wohnen_4
+#      - binary_sensor.replace_me_regen_schlafen_1
+#      - binary_sensor.replace_me_regen_schlafen_2
+
+#input_boolean:
+#  klima_heizperiode:
+#    name: Klima Heizperiode
+#    icon: mdi:radiator
+#  klima_urlaub_aktiv:
+#    name: Klima Urlaubszeitraum aktiviert
+#    icon: mdi:airplane
+
+#input_select:
+#  klima_betriebsart:
+#    name: Klima Betriebsart
+#    options:
+#      - Automatik
+#      - Manuell
+#    initial: Automatik
+
+#input_datetime:
+#  klima_urlaub_start:
+#    name: Klima Urlaub Beginn
+#    has_date: true
+#    has_time: true
+#  klima_urlaub_ende:
+#    name: Klima Urlaub Ende
+#    has_date: true
+#    has_time: true
+
+#input_number:
+#  klima_wohnen_komfort:
+#    name: Klima Wohnen Komfort
+#    min: 15
+#    max: 25
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_wohnen_eco:
+#    name: Klima Wohnen Eco
+#    min: 10
+#    max: 22
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_schlafen_komfort:
+#    name: Klima Schlafen Komfort
+#    min: 15
+#    max: 23
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_schlafen_nacht:
+#    name: Klima Schlafen Nacht
+#    min: 14
+#    max: 22
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_bad_komfort:
+#    name: Klima Bad Komfort
+#    min: 15
+#    max: 25
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_bad_eco:
+#    name: Klima Bad Eco
+#    min: 10
+#    max: 22
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_schutz_sollwert:
+#    name: Klima Schutz Sollwert
+#    min: 8
+#    max: 16
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_urlaub_sollwert:
+#    name: Klima Urlaub Sollwert
+#    min: 8
+#    max: 20
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_abwesenheit_max:
+#    name: Klima Abwesenheit Maximaltemperatur
+#    min: 24
+#    max: 30
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_wohnen_kuehlziel:
+#    name: Klima Wohnen Kuehlziel
+#    min: 20
+#    max: 28
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_kuehlung_ein:
+#    name: Klima Kuehlung Einschalten
+#    min: 24
+#    max: 29
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_kuehlung_aus:
+#    name: Klima Kuehlung Ausschalten
+#    min: 20
+#    max: 27
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_kuehlung_vorhersage:
+#    name: Klima Kuehlung bei prognostizierter Hitze
+#    min: 25
+#    max: 40
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_heizperiode_ein:
+#    name: Klima Heizperiode Einschalten
+#    min: -5
+#    max: 25
+#    step: 0.5
+#    unit_of_measurement: "°C"
+#    mode: slider
+#  klima_heizperiode_aus:
+##    name: Klima Heizperiode Ausschalten
+##    min: -5
+##    max: 25
+##    step: 0.5
+##    unit_of_measurement: "°C"
+##    mode: slider
+#  klima_max_windgeschwindigkeit:
+#    name: Klima Maximaler Wind zum Lueften
+#    min: 0
+#    max: 100
+#    step: 1
+#    mode: slider
+#  klima_lueftungsdauer:
+#    name: Klima Lueftungsdauer
+#    min: 5
+#    max: 45
+#    step: 5
+#    unit_of_measurement: min
+#     mode: slider
+
+timer:
+#  klima_manuelle_uebersteuerung:
+#    name: Klima Manuelle Uebersteuerung
+#    duration: "02:00:00"
+#  klima_lueftung_wohnen:
+#    name: Klima Lüftung Wohnbereich
+#    duration: "00:15:00"
+  klima_daikin_heizboost: # ha_daikin_heiz_boost
+    name: Klima Daikin Heiz-Boost
+    duration: "00:30:00"
+
+sensor:
+  - platform: statistics
+    name: Klima Außentemperatur 24h Mittel 
+    unique_id: klima_aussentemperatur_24h_mittel # ha_aussentemperatur_24h_mittel
+    entity_id: sensor.replace_me_wetter_aussentemperatur
+    state_characteristic: mean
+    max_age:
+      hours: 24
+
+template:
+  - binary_sensor:
+      - name: Klima Urlaub aktiv
+        unique_id: klima_urlaub_aktiv
+        state: >-
+          {% set start = as_timestamp(states('input_datetime.klima_urlaub_start'), default=none) %}
+          {% set ende = as_timestamp(states('input_datetime.klima_urlaub_ende'), default=none) %}
+          {{ is_state('input_boolean.klima_urlaub_aktiv', 'on')
+             and start is not none and ende is not none
+             and start <= as_timestamp(now()) <= ende }}
+        icon: mdi:airplane
+    sensor:
+      - name: Klima Windgeschwindigkeit
+        unique_id: klima_windgeschwindigkeit
+        state: "{{ state_attr('weather.replace_me_home', 'wind_speed') }}"
+
+
+
+# -----------------------------------------------------------------------------------
+
+
+
+script:
+#  klima_wohnen_sollwert_setzen:
+#    alias: Klima - Wohnbereich Sollwert setzen
+#    mode: queued
+#    fields:
+#      temperatur:
+#        description: Zieltemperatur fuer die drei Heizkoerper
+#        example: 20
+#    sequence:
+#      - action: climate.set_temperature
+#        target:
+#          entity_id:
+#            - climate.replace_me_dect301_wohnen_1
+#            - climate.replace_me_dect301_wohnen_2
+#            - climate.replace_me_dect301_wohnen_3
+#        data:
+#          temperature: "{{ temperatur | float(17) }}"
+
+#  klima_bad_sollwert_setzen:
+#    alias: Klima - Bad Sollwert setzen
+#    mode: queued
+#    fields:
+#      temperatur:
+#        description: Zieltemperatur fuer den Badheizkoerper
+#        example: 20
+#    sequence:
+#      - action: climate.set_temperature
+#        target:
+#          entity_id: climate.replace_me_dect301_bad
+#        data:
+#          temperature: "{{ temperatur | float(17) }}"
+
+# -----------------------------------------------------------------------------------
+
+
+automation:
+  - id: klima_sollwerte_wohnen_anwenden
+    alias: Klima - Wohnbereich Sollwerte anwenden
+    mode: restart
+    triggers:
+      - trigger: homeassistant
+        event: start
+      - trigger: state
+        entity_id:
+          - group.haushalt
+          - group.klima_fenster_wohnen_offen
+          - binary_sensor.klima_urlaub_aktiv
+          - input_select.klima_betriebsart
+          - timer.klima_manuelle_uebersteuerung
+          - schedule.klima_wohnen_komfortzeit
+          - input_number.klima_wohnen_komfort
+          - input_number.klima_wohnen_eco
+          - input_number.klima_urlaub_sollwert
+          - input_number.klima_schutz_sollwert
+          - input_boolean.klima_heizperiode
+    actions:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: group.klima_fenster_wohnen_offen
+                state: "on"
+            sequence:
+              - action: script.klima_wohnen_sollwert_setzen
+                data:
+                  temperatur: "{{ states('input_number.klima_schutz_sollwert') | float(12) }}"
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.klima_urlaub_aktiv
+                state: "on"
+            sequence:
+              - action: script.klima_wohnen_sollwert_setzen
+                data:
+                  temperatur: "{{ states('input_number.klima_urlaub_sollwert') | float(16) }}"
+          - conditions:
+              - condition: state
+                entity_id: group.haushalt
+                state: not_home
+            sequence:
+              - action: script.klima_wohnen_sollwert_setzen
+                data:
+                  temperatur: "{{ states('input_number.klima_wohnen_eco') | float(17) }}"
+          - conditions:
+              - condition: state
+                entity_id: input_select.klima_betriebsart
+                state: Manuell
+              - condition: state
+                entity_id: timer.klima_manuelle_uebersteuerung
+                state: active
+            sequence: []
+        default:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_boolean.klima_heizperiode
+                    state: "on"
+                  - condition: state
+                    entity_id: schedule.klima_wohnen_komfortzeit
+                    state: "on"
+                sequence:
+                  - action: script.klima_wohnen_sollwert_setzen
+                    data:
+                      temperatur: "{{ states('input_number.klima_wohnen_komfort') | float(20) }}"
+              - conditions:
+                  - condition: state
+                    entity_id: input_boolean.klima_heizperiode
+                    state: "on"
+                sequence:
+                  - action: script.klima_wohnen_sollwert_setzen
+                    data:
+                      temperatur: "{{ states('input_number.klima_wohnen_eco') | float(17) }}"
+            default:
+              - action: script.klima_wohnen_sollwert_setzen
+                data:
+                  temperatur: "{{ states('input_number.klima_schutz_sollwert') | float(12) }}"
+
+  - id: klima_sollwerte_bad_anwenden
+    alias: Klima - Bad Sollwerte anwenden
+    mode: restart
+    triggers:
+      - trigger: homeassistant
+        event: start
+      - trigger: state
+        entity_id:
+          - group.haushalt
+          - binary_sensor.klima_urlaub_aktiv
+          - input_select.klima_betriebsart
+          - timer.klima_manuelle_uebersteuerung
+          - schedule.klima_bad_komfortzeit
+          - input_number.klima_bad_komfort
+          - input_number.klima_bad_eco
+          - input_number.klima_urlaub_sollwert
+          - input_number.klima_schutz_sollwert
+          - input_boolean.klima_heizperiode
+    actions:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.klima_urlaub_aktiv
+                state: "on"
+            sequence:
+              - action: script.klima_bad_sollwert_setzen
+                data:
+                  temperatur: "{{ states('input_number.klima_urlaub_sollwert') | float(16) }}"
+          - conditions:
+              - condition: state
+                entity_id: group.haushalt
+                state: not_home
+            sequence:
+              - action: script.klima_bad_sollwert_setzen
+                data:
+                  temperatur: "{{ states('input_number.klima_bad_eco') | float(17) }}"
+          - conditions:
+              - condition: state
+                entity_id: input_select.klima_betriebsart
+                state: Manuell
+              - condition: state
+                entity_id: timer.klima_manuelle_uebersteuerung
+                state: active
+            sequence: []
+        default:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_boolean.klima_heizperiode
+                    state: "on"
+                  - condition: state
+                    entity_id: schedule.klima_bad_komfortzeit
+                    state: "on"
+                sequence:
+                  - action: script.klima_bad_sollwert_setzen
+                    data:
+                      temperatur: "{{ states('input_number.klima_bad_komfort') | float(20) }}"
+              - conditions:
+                  - condition: state
+                    entity_id: input_boolean.klima_heizperiode
+                    state: "on"
+                sequence:
+                  - action: script.klima_bad_sollwert_setzen
+                    data:
+                      temperatur: "{{ states('input_number.klima_bad_eco') | float(17) }}"
+            default:
+              - action: script.klima_bad_sollwert_setzen
+                data:
+                  temperatur: "{{ states('input_number.klima_schutz_sollwert') | float(12) }}"
+
+  - id: klima_manuel_timer_starten
+    alias: Klima - manuelle Uebersteuerung starten
+    mode: restart
+    triggers:
+      - trigger: state
+        entity_id: input_select.klima_betriebsart
+        to: Manuell
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        state: "off"
+      - condition: state
+        entity_id: group.haushalt
+        state: home
+    actions:
+      - action: timer.start
+        target:
+          entity_id: timer.klima_manuelle_uebersteuerung
+        data:
+          duration: "02:00:00"
+
+  - id: klima_manuel_timer_beenden
+    alias: Klima - manuelle Uebersteuerung beenden
+    mode: single
+    triggers:
+      - trigger: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.klima_manuelle_uebersteuerung
+    actions:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.klima_betriebsart
+        data:
+          option: Automatik
+
+  - id: klima_heizperiode_einschalten
+    alias: Klima - Heizperiode einschalten
+    mode: single
+    triggers:
+      - trigger: numeric_state
+        entity_id: sensor.klima_aussentemperatur_24h_mittel
+        below: input_number.klima_heizperiode_ein
+        for: "48:00:00"
+    conditions:
+      - condition: state
+        entity_id: input_boolean.klima_heizperiode
+        state: "off"
+    actions:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.klima_heizperiode
+
+  - id: klima_heizperiode_ausschalten
+    alias: Klima - Heizperiode ausschalten
+    mode: single
+    triggers:
+      - trigger: numeric_state
+        entity_id: sensor.klima_aussentemperatur_24h_mittel
+        above: input_number.klima_heizperiode_aus
+        for: "48:00:00"
+    conditions:
+      - condition: state
+        entity_id: input_boolean.klima_heizperiode
+        state: "on"
+    actions:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.klima_heizperiode
+
+  - id: klima_dachfenster_sicherheit_schliessen
+    alias: Klima - Dachfenster bei Risiko schliessen
+    mode: restart
+    triggers:
+      - trigger: state
+        entity_id: group.klima_regen
+        to: "on"
+      - trigger: state
+        entity_id: group.klima_regen
+        to: unavailable
+      - trigger: state
+        entity_id: group.klima_regen
+        to: unknown
+      - trigger: numeric_state
+        entity_id: sensor.klima_windgeschwindigkeit
+        above: input_number.klima_max_windgeschwindigkeit
+      - trigger: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        to: "on"
+      - trigger: state
+        entity_id: sensor.klima_windgeschwindigkeit
+        to: unavailable
+      - trigger: state
+        entity_id: sensor.klima_windgeschwindigkeit
+        to: unknown
+    actions:
+      - action: cover.close_cover
+        target:
+          entity_id:
+            - cover.replace_me_fenster_wohnen_1
+            - cover.replace_me_fenster_wohnen_2
+            - cover.replace_me_fenster_wohnen_3
+            - cover.replace_me_fenster_wohnen_4
+            - cover.replace_me_fenster_schlafen_1
+            - cover.replace_me_fenster_schlafen_2
+
+  - id: klima_dachfenster_lueften_wohnen
+    alias: Klima - Wohnbereich natuerlich lueften
+    description: Ausschalten und erst nach Pruefung der Winddaten aktivieren.
+    initial_state: false
+    mode: single
+    triggers:
+      - trigger: numeric_state
+        entity_id: sensor.replace_me_avm440_temperatur
+        above: 24
+        for: "00:10:00"
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        state: "off"
+      - condition: state
+        entity_id: group.klima_fenster_wohnen_offen
+        state: "off"
+      - condition: state
+        entity_id: group.klima_regen
+        state: "off"
+      - condition: numeric_state
+        entity_id: sensor.klima_windgeschwindigkeit
+        below: input_number.klima_max_windgeschwindigkeit
+      - condition: template
+        value_template: >-
+          {{ is_number(states('sensor.replace_me_wetter_aussentemperatur'))
+             and is_number(states('sensor.replace_me_avm440_temperatur'))
+             and states('sensor.replace_me_wetter_aussentemperatur') | float
+                 <= states('sensor.replace_me_avm440_temperatur') | float - 2 }}
+    actions:
+      - action: weather.get_forecasts
+        target:
+          entity_id: weather.replace_me_home
+        data:
+          type: hourly
+        response_variable: klima_lueftungswetter
+      - variables:
+          klima_max_windvorhersage: >-
+            {% set eintraege = klima_lueftungswetter['weather.replace_me_home']['forecast'][:2] %}
+            {% set windwerte = eintraege | selectattr('wind_speed', 'defined') | map(attribute='wind_speed') | map('float', 999) | list %}
+            {{ windwerte | max(default=999) }}
+      - condition: template
+        value_template: >-
+          {{ klima_max_windvorhersage | float(999)
+             <= states('input_number.klima_max_windgeschwindigkeit') | float(0) }}
+      - action: scene.create
+        data:
+          scene_id: klima_daikin_vor_lueften
+          snapshot_entities:
+            - climate.replace_me_daikin
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: "off"
+      - action: cover.open_cover
+        target:
+          entity_id: cover.replace_me_fenster_wohnen_1
+      - action: timer.start
+        target:
+          entity_id: timer.klima_lueftung_wohnen
+        data:
+          duration: "00:{{ '%02d' | format(states('input_number.klima_lueftungsdauer') | int(15)) }}:00"
+
+  - id: klima_dachfenster_lueften_schliessen
+    alias: Klima - Fenster nach Lueftung oder Gefahr schliessen
+    mode: restart
+    triggers:
+      - trigger: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.klima_lueftung_wohnen
+        id: lueftungszeit_abgelaufen
+      - trigger: state
+        entity_id: group.klima_regen
+        to: "on"
+        id: regen
+      - trigger: numeric_state
+        entity_id: sensor.klima_windgeschwindigkeit
+        above: input_number.klima_max_windgeschwindigkeit
+        id: wind
+      - trigger: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        to: "on"
+        id: urlaub
+    actions:
+      - action: cover.close_cover
+        target:
+          entity_id: cover.replace_me_fenster_wohnen_1
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: lueftungszeit_abgelaufen
+              - condition: state
+                entity_id: binary_sensor.klima_urlaub_aktiv
+                state: "off"
+            sequence:
+              - action: scene.turn_on
+                target:
+                  entity_id: scene.klima_daikin_vor_lueften
+
+  - id: klima_westbeschattung
+    alias: Klima - Westbeschattung nach Sonne und Raumtemperatur
+    mode: single
+    triggers:
+      - trigger: time_pattern
+        minutes: "/15"
+      - trigger: numeric_state
+        entity_id: sensor.replace_me_avm440_temperatur
+        above: 24
+        for: "00:10:00"
+    conditions:
+      - condition: template
+        value_template: >-
+          {{ state_attr('sun.sun', 'azimuth') | float(0) >= 200
+             and state_attr('sun.sun', 'azimuth') | float(0) <= 300
+             and state_attr('sun.sun', 'elevation') | float(-90) > 5
+             and is_number(states('sensor.replace_me_avm440_temperatur')) }}
+    actions:
+      - action: weather.get_forecasts
+        target:
+          entity_id: weather.replace_me_home
+        data:
+          type: hourly
+        response_variable: klima_wetter
+      - variables:
+          klima_max_vorhersage: >-
+            {% set eintraege = klima_wetter['weather.replace_me_home']['forecast'][:4] %}
+            {{ eintraege | map(attribute='temperature') | max(default=0) }}
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: >-
+                  {{ klima_max_vorhersage | float(0) >= 26
+                     or states('sensor.replace_me_avm440_temperatur') | float(0) >= 25 }}
+            sequence:
+              - action: cover.close_cover
+                target:
+                  entity_id:
+                    - cover.replace_me_rollladen_wohnen_1
+                    - cover.replace_me_rollladen_wohnen_2
+                    - cover.replace_me_rollladen_wohnen_3
+                    - cover.replace_me_rollladen_wohnen_4
+        default:
+          - stop: Keine bevorstehende Hitze; Beschattung unverändert lassen.
+
+  - id: klima_westbeschattung_oeffnen
+    alias: Klima - Westbeschattung nach Sonne oeffnen
+    mode: single
+    triggers:
+      - trigger: time_pattern
+        minutes: "/15"
+    conditions:
+      - condition: template
+        value_template: >-
+          {{ state_attr('sun.sun', 'azimuth') is not none
+             and state_attr('sun.sun', 'elevation') is not none
+             and is_number(states('sensor.replace_me_avm440_temperatur')) }}
+    actions:
+      - action: weather.get_forecasts
+        target:
+          entity_id: weather.replace_me_home
+        data:
+          type: hourly
+        response_variable: klima_wetter_oeffnen
+      - variables:
+          klima_max_vorhersage_oeffnen: >-
+            {% set eintraege = klima_wetter_oeffnen['weather.replace_me_home']['forecast'][:4] %}
+            {{ eintraege | map(attribute='temperature') | map('float', 99) | max(default=99) }}
+      - condition: template
+        value_template: >-
+          {{ state_attr('sun.sun', 'azimuth') | float(0) > 300
+             or state_attr('sun.sun', 'elevation') | float(-90) <= 5
+             or (states('sensor.replace_me_avm440_temperatur') | float(99) < 23
+                 and klima_max_vorhersage_oeffnen | float(99) < 25) }}
+      - action: cover.open_cover
+        target:
+          entity_id:
+            - cover.replace_me_rollladen_wohnen_1
+            - cover.replace_me_rollladen_wohnen_2
+            - cover.replace_me_rollladen_wohnen_3
+            - cover.replace_me_rollladen_wohnen_4
+
+  - id: klima_komfortkuehlung_start
+    alias: Klima - Komfortkuehlung zuhause starten
+    mode: single
+    triggers:
+      - trigger: template
+        for: "00:05:00"
+        value_template: >-
+          {{ is_number(states('sensor.replace_me_avm440_temperatur'))
+             and states('sensor.replace_me_avm440_temperatur') | float
+                 >= states('input_number.klima_wohnen_kuehlziel') | float(25) + 0.5 }}
+    conditions:
+      - condition: state
+        entity_id: group.haushalt
+        state: home
+      - condition: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        state: "off"
+      - condition: state
+        entity_id: schedule.klima_wohnen_komfortzeit
+        state: "on"
+      - condition: state
+        entity_id: group.klima_fenster_wohnen_offen
+        state: "off"
+      - condition: template
+        value_template: "{{ 'cool' in state_attr('climate.replace_me_daikin', 'hvac_modes') }}"
+    actions:
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: cool
+      - action: climate.set_temperature
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          temperature: "{{ states('input_number.klima_wohnen_kuehlziel') | float(25) }}"
+
+  - id: klima_daikin_fenster_schutz
+    alias: Klima - Daikin bei offenem Wohnfenster stoppen
+    mode: restart
+    triggers:
+      - trigger: state
+        entity_id: group.klima_fenster_wohnen_offen
+        to: "on"
+    conditions:
+      - condition: template
+        value_template: "{{ states('climate.replace_me_daikin') != 'off' }}"
+    actions:
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: "off"
+
+  - id: klima_komfortkuehlung_stop
+    alias: Klima - Komfortkuehlung zuhause stoppen
+    mode: restart
+    triggers:
+      - trigger: template
+        value_template: >-
+          {{ is_number(states('sensor.replace_me_avm440_temperatur'))
+             and states('sensor.replace_me_avm440_temperatur') | float
+                 <= states('input_number.klima_wohnen_kuehlziel') | float(25) - 0.5 }}
+      - trigger: state
+        entity_id: schedule.klima_wohnen_komfortzeit
+        to: "off"
+      - trigger: state
+        entity_id: group.klima_fenster_wohnen_offen
+        to: "on"
+      - trigger: state
+        entity_id: group.haushalt
+        from: home
+        to: not_home
+      - trigger: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        to: "on"
+      - trigger: state
+        entity_id: sensor.replace_me_avm440_temperatur
+        to: unavailable
+    conditions:
+      - condition: state
+        entity_id: climate.replace_me_daikin
+        state: cool
+    actions:
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: "off"
+
+  - id: klima_abwesenheitskuehlung_start
+    alias: Klima - Abwesenheitskuehlung starten
+    mode: single
+    triggers:
+      - trigger: numeric_state
+        entity_id: sensor.replace_me_avm440_temperatur
+        above: input_number.klima_kuehlung_ein
+        for: "00:05:00"
+      - trigger: homeassistant
+        event: start
+    conditions:
+      - condition: state
+        entity_id: group.haushalt
+        state: not_home
+      - condition: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        state: "off"
+      - condition: state
+        entity_id: group.klima_fenster_wohnen_offen
+        state: "off"
+      - condition: template
+        value_template: >-
+          {{ states('input_number.klima_kuehlung_ein') | float(25.5)
+             < states('input_number.klima_abwesenheit_max') | float(26) }}
+      - condition: template
+        value_template: >-
+          {{ is_number(states('sensor.replace_me_avm440_temperatur'))
+             and states('sensor.replace_me_avm440_temperatur') | float
+                 >= states('input_number.klima_kuehlung_ein') | float(25.5)
+             and 'cool' in state_attr('climate.replace_me_daikin', 'hvac_modes') }}
+    actions:
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: cool
+      - action: climate.set_temperature
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          temperature: 24.5
+
+  - id: klima_abwesenheitskuehlung_stop
+    alias: Klima - Abwesenheitskuehlung stoppen
+    mode: restart
+    triggers:
+      - trigger: numeric_state
+        entity_id: sensor.replace_me_avm440_temperatur
+        below: input_number.klima_kuehlung_aus
+      - trigger: state
+        entity_id: group.klima_fenster_wohnen_offen
+        to: "on"
+      - trigger: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        to: "on"
+      - trigger: state
+        entity_id: sensor.replace_me_avm440_temperatur
+        to: unavailable
+    conditions:
+      - condition: state
+        entity_id: climate.replace_me_daikin
+        state: cool
+    actions:
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: "off"
+
+  - id: klima_abwesenheitskuehlung_prognose
+    alias: Klima - Abwesenheitskuehlung nach Wetterprognose vorziehen
+    mode: single
+    triggers:
+      - trigger: time_pattern
+        minutes: "/30"
+    conditions:
+      - condition: state
+        entity_id: group.haushalt
+        state: not_home
+      - condition: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        state: "off"
+      - condition: state
+        entity_id: group.klima_fenster_wohnen_offen
+        state: "off"
+      - condition: template
+        value_template: >-
+          {{ is_number(states('sensor.replace_me_avm440_temperatur'))
+             and states('sensor.replace_me_avm440_temperatur') | float >= 24.5
+             and states('climate.replace_me_daikin') != 'cool'
+             and 'cool' in state_attr('climate.replace_me_daikin', 'hvac_modes') }}
+    actions:
+      - action: weather.get_forecasts
+        target:
+          entity_id: weather.replace_me_home
+        data:
+          type: hourly
+        response_variable: klima_kuehlwetter
+      - variables:
+          klima_max_aussentemperatur_6h: >-
+            {% set eintraege = klima_kuehlwetter['weather.replace_me_home']['forecast'][:6] %}
+            {{ eintraege | map(attribute='temperature') | map('float', 0) | max(default=0) }}
+      - condition: template
+        value_template: >-
+          {{ klima_max_aussentemperatur_6h | float(0)
+             >= states('input_number.klima_kuehlung_vorhersage') | float(30) }}
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: cool
+      - action: climate.set_temperature
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          temperature: "{{ states('input_number.klima_kuehlung_aus') | float(24.5) }}"
+
+  - id: klima_daikin_heizboost_start
+    alias: Klima - Daikin Heiz-Boost starten
+    mode: single
+    triggers:
+      - trigger: template
+        for: "00:15:00"
+        value_template: >-
+          {{ is_number(states('sensor.replace_me_avm440_temperatur'))
+             and states('sensor.replace_me_avm440_temperatur') | float
+                 < states('input_number.klima_wohnen_komfort') | float(20) - 1.5 }}
+    conditions:
+      - condition: state
+        entity_id: group.haushalt
+        state: home
+      - condition: state
+        entity_id: input_boolean.klima_heizperiode
+        state: "on"
+      - condition: state
+        entity_id: schedule.klima_wohnen_komfortzeit
+        state: "on"
+      - condition: state
+        entity_id: group.klima_fenster_wohnen_offen
+        state: "off"
+      - condition: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        state: "off"
+      - condition: template
+        value_template: "{{ 'heat' in state_attr('climate.replace_me_daikin', 'hvac_modes') }}"
+      - condition: template
+        value_template: >-
+          {{ states('climate.replace_me_daikin') in ['off', 'heat']
+             and not (is_state('input_select.klima_betriebsart', 'Manuell')
+                      and is_state('timer.klima_manuelle_uebersteuerung', 'active')) }}
+    actions:
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: heat
+      - action: climate.set_temperature
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          temperature: "{{ states('input_number.klima_wohnen_komfort') | float(20) }}"
+      - action: timer.start
+        target:
+          entity_id: timer.klima_daikin_heizboost
+
+  - id: klima_daikin_heizboost_stop
+    alias: Klima - Daikin Heiz-Boost stoppen
+    mode: restart
+    triggers:
+      - trigger: template
+        value_template: >-
+          {{ is_number(states('sensor.replace_me_avm440_temperatur'))
+             and states('sensor.replace_me_avm440_temperatur') | float
+                 >= states('input_number.klima_wohnen_komfort') | float(20) - 0.3 }}
+      - trigger: state
+        entity_id: group.klima_fenster_wohnen_offen
+        to: "on"
+      - trigger: state
+        entity_id: group.haushalt
+        from: home
+        to: not_home
+      - trigger: state
+        entity_id: binary_sensor.klima_urlaub_aktiv
+        to: "on"
+      - trigger: state
+        entity_id: input_boolean.klima_heizperiode
+        to: "off"
+      - trigger: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.klima_daikin_heizboost
+    conditions:
+      - condition: state
+        entity_id: climate.replace_me_daikin
+        state: heat
+    actions:
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: "off"
+      - action: timer.cancel
+        target:
+          entity_id: timer.klima_daikin_heizboost
+
+  - id: klima_daikin_luft_umwaelzen
+    alias: Klima - Daikin Luft im Heizbetrieb umwaelzen
+    description: Erst nach Sensorabgleich und Pruefung von fan_only aktivieren.
+    initial_state: false
+    mode: single
+    triggers:
+      - trigger: template
+        for: "00:10:00"
+        value_template: >-
+          {{ is_number(states('sensor.replace_me_daikin_temperatur'))
+             and is_number(states('sensor.replace_me_avm440_temperatur'))
+             and states('sensor.replace_me_daikin_temperatur') | float
+                 - states('sensor.replace_me_avm440_temperatur') | float >= 2 }}
+    conditions:
+      - condition: state
+        entity_id: group.haushalt
+        state: home
+      - condition: state
+        entity_id: input_boolean.klima_heizperiode
+        state: "on"
+      - condition: state
+        entity_id: group.klima_fenster_wohnen_offen
+        state: "off"
+      - condition: state
+        entity_id: climate.replace_me_daikin
+        state: heat
+      - condition: template
+        value_template: >-
+          {{ state_attr('climate.replace_me_daikin', 'hvac_action') == 'idle'
+             and 'fan_only' in state_attr('climate.replace_me_daikin', 'hvac_modes') }}
+    actions:
+      - action: scene.create
+        data:
+          scene_id: klima_daikin_vor_luftumwaelzung
+          snapshot_entities:
+            - climate.replace_me_daikin
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: fan_only
+      - delay: "00:10:00"
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.klima_urlaub_aktiv
+                state: "off"
+              - condition: state
+                entity_id: group.haushalt
+                state: home
+              - condition: state
+                entity_id: group.klima_fenster_wohnen_offen
+                state: "off"
+            sequence:
+              - action: scene.turn_on
+                target:
+                  entity_id: scene.klima_daikin_vor_luftumwaelzung
+        default:
+          - action: climate.set_hvac_mode
+            target:
+              entity_id: climate.replace_me_daikin
+            data:
+              hvac_mode: "off"
+      - delay: "00:30:00"
+
+  - id: klima_daikin_luftumwaelzung_recovery
+    alias: Klima - Daikin Ventilator nach Neustart absichern
+    mode: single
+    triggers:
+      - trigger: homeassistant
+        event: start
+    conditions:
+      - condition: state
+        entity_id: climate.replace_me_daikin
+        state: fan_only
+    actions:
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: climate.replace_me_daikin
+        data:
+          hvac_mode: "off"
